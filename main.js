@@ -1,7 +1,7 @@
 var before = document.getElementById("before");
 var liner = document.getElementById("liner");
-var command = document.getElementById("typer"); 
-var textarea = document.getElementById("texter"); 
+var command = document.getElementById("typer");
+var textarea = document.getElementById("texter");
 var terminal = document.getElementById("terminal");
 
 var git = 0;
@@ -9,39 +9,56 @@ var pw = false;
 let pwd = false;
 var commands = [];
 
-setTimeout(function() {
+// Mantém foco no textarea ao clicar em qualquer lugar da página
+document.addEventListener("click", () => textarea.focus());
+
+setTimeout(function () {
   loopLines(banner, "", 80);
   textarea.focus();
 }, 100);
 
+// Usa "input" para capturar digitação em tempo real (mais confiável que keyup)
+textarea.addEventListener("input", function () {
+  if (pw) {
+    command.innerHTML = "*".repeat(textarea.value.length);
+    if (textarea.value === password) pwd = true;
+  } else {
+    // Escapa HTML para evitar injeção de tags ao digitar < > & etc.
+    command.innerHTML = escapeHTML(textarea.value);
+  }
+});
+
+// Mantém o keyup no window para capturar Enter/setas mesmo sem foco exato
 window.addEventListener("keyup", enterKey);
+window.addEventListener("keydown", function (e) {
+  // Previne scroll da página com setas enquanto digita
+  if ([38, 40].includes(e.keyCode)) e.preventDefault();
+});
 
-
-
-//init
 textarea.value = "";
-command.innerHTML = textarea.value;
+command.innerHTML = "";
+
+function escapeHTML(str) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
 
 function enterKey(e) {
   if (e.keyCode == 181) {
     document.location.reload(true);
   }
+
   if (pw) {
-    let et = "*";
-    let w = textarea.value.length;
-    command.innerHTML = et.repeat(w);
-    if (textarea.value === password) {
-      pwd = true;
-    }
-    if (pwd && e.keyCode == 13) {
-      loopLines(secret, "color2 margin", 120);
-      command.innerHTML = "";
-      textarea.value = "";
-      pwd = false;
-      pw = false;
-      liner.classList.remove("password");
-    } else if (e.keyCode == 13) {
-      addLine("Wrong password", "error", 0);
+    if (e.keyCode == 13) {
+      if (pwd) {
+        loopLines(secret, "color2 margin", 120);
+        pwd = false;
+      } else {
+        addLine("Wrong password", "error", 0);
+      }
       command.innerHTML = "";
       textarea.value = "";
       pw = false;
@@ -49,51 +66,64 @@ function enterKey(e) {
     }
   } else {
     if (e.keyCode == 13) {
-      commands.push(command.innerHTML);
+      const cmd = command.innerHTML;
+      commands.push(cmd);
       git = commands.length;
-      addLine("DEMP@Admin:~$ " + command.innerHTML, "no-animation", 0);
-      commander(command.innerHTML.toLowerCase());
+      // Usa textContent do command para pegar o texto limpo
+      addLine("DEMP@Admin:~$ " + cmd, "no-animation", 0);
+      commander(textarea.value.trim().toLowerCase());
       command.innerHTML = "";
       textarea.value = "";
     }
-    if (e.keyCode == 38 && git != 0) {
+
+    if (e.keyCode == 38 && git > 0) {
       git -= 1;
       textarea.value = commands[git];
-      command.innerHTML = textarea.value;
+      command.innerHTML = escapeHTML(commands[git]);
     }
-    if (e.keyCode == 40 && git != commands.length) {
+
+    if (e.keyCode == 40 && git < commands.length) {
       git += 1;
-      if (commands[git] === undefined) {
-        textarea.value = "";
-      } else {
-        textarea.value = commands[git];
-      }
-      command.innerHTML = textarea.value;
+      const val = commands[git] ?? "";
+      textarea.value = val;
+      command.innerHTML = escapeHTML(val);
     }
   }
 }
 
 function commander(cmd) {
-  switch (cmd.toLowerCase()) {
-    
+  switch (cmd) {
     case "clear":
-      setTimeout(function() {
+      setTimeout(function () {
         terminal.innerHTML = '<a id="before"></a>';
         before = document.getElementById("before");
       }, 1);
       break;
-      case "Jasmin":
-        loopLines(Jasmin,"color2 margin", 80);
-        break;
-    
+
+    case "jasmin":
+      loopLines(Jasmin, "color2 margin", 80);
+      break;
+
+    case "camila botelho":
+      loopLines(Camila, "color2 margin",80);
+      break;
+
+    case "camila log0001":
+      loopLines(Log01, "color2 margin",80)
+      break;
+
     default:
-      addLine("<span class=\"color2\">Command not found. For a list of commands, type 'help'.</span>", "error", 100);
+      addLine(
+        "<span class=\"color2\">Command not found. For a list of commands, type 'help'.</span>",
+        "error",
+        100
+      );
       break;
   }
 }
 
 function newTab(link) {
-  setTimeout(function() {
+  setTimeout(function () {
     window.open(link, "_blank");
   }, 500);
 }
@@ -101,26 +131,24 @@ function newTab(link) {
 function addLine(text, style, time) {
   var t = "";
   for (let i = 0; i < text.length; i++) {
-    if (text.charAt(i) == " " && text.charAt(i + 1) == " ") {
+    if (text.charAt(i) === " " && text.charAt(i + 1) === " ") {
       t += "&nbsp;&nbsp;";
       i++;
     } else {
       t += text.charAt(i);
     }
   }
-  setTimeout(function() {
+  setTimeout(function () {
     var next = document.createElement("p");
     next.innerHTML = t;
     next.className = style;
-
     before.parentNode.insertBefore(next, before);
-
     window.scrollTo(0, document.body.offsetHeight);
   }, time);
 }
 
 function loopLines(name, style, time) {
-  name.forEach(function(item, index) {
+  name.forEach(function (item, index) {
     addLine(item, style, index * time);
   });
 }

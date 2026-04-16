@@ -104,6 +104,10 @@ function commander(cmd) {
       loopLines(Jasmin, "color2 margin", 80);
       break;
 
+    case "maria flor":
+      loopLines(Jasmin, "color2 margin",80);
+      break;
+
     case "camila botelho":
       loopLines(Camila, "color2 margin",80);
       break;

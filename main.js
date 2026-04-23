@@ -112,8 +112,16 @@ function commander(cmd) {
       loopLines(Camila, "color2 margin",80);
       break;
 
-    case "camila log0001":
+    case "botelho log0001":
       loopLines(Log01, "color2 margin",80)
+      break;
+    
+    case "botelho log0002":
+      loopLines(Log02, "color2 margin",80)
+      break;
+
+    case "botelho log0003":
+      loopLines(Log03, "color2 margin",80)
       break;
 
     default:

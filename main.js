@@ -9,21 +9,34 @@ var pw = false;
 let pwd = false;
 var commands = [];
 
-// Mantém foco no textarea ao clicar em qualquer lugar da página
+
 document.addEventListener("click", () => textarea.focus());
 
+// ── BOOT SEQUENCE ANTES DO BANNER ─────────────────────────────────────
 setTimeout(function () {
-  loopLines(banner, "", 80);
-  textarea.focus();
-}, 100);
+  var delay = 0;
 
-// Usa "input" para capturar digitação em tempo real (mais confiável que keyup)
+  bootSequence.forEach(function (line) {
+    delay += Math.floor(Math.random() * 180) + 600; 
+    (function (d) {
+      setTimeout(function () {
+        addLine(line, "no-animation boot-line", 0);
+      }, d);
+    })(delay);
+  });
+
+  setTimeout(function () {
+    loopLines(banner, "", 80);
+    textarea.focus();
+  }, delay + 600);
+}, 200);
+
+
 textarea.addEventListener("input", function () {
   if (pw) {
     command.innerHTML = "*".repeat(textarea.value.length);
     if (textarea.value === password) pwd = true;
   } else {
-    // Escapa HTML para evitar injeção de tags ao digitar < > & etc.
     command.innerHTML = escapeHTML(textarea.value);
   }
 });
@@ -31,7 +44,6 @@ textarea.addEventListener("input", function () {
 // Mantém o keyup no window para capturar Enter/setas mesmo sem foco exato
 window.addEventListener("keyup", enterKey);
 window.addEventListener("keydown", function (e) {
-  // Previne scroll da página com setas enquanto digita
   if ([38, 40].includes(e.keyCode)) e.preventDefault();
 });
 
@@ -69,7 +81,6 @@ function enterKey(e) {
       const cmd = command.innerHTML;
       commands.push(cmd);
       git = commands.length;
-      // Usa textContent do command para pegar o texto limpo
       addLine("DEMP@Admin:~$ " + cmd, "no-animation", 0);
       commander(textarea.value.trim().toLowerCase());
       command.innerHTML = "";
@@ -105,23 +116,23 @@ function commander(cmd) {
       break;
 
     case "maria flor":
-      loopLines(Jasmin, "color2 margin",80);
+      loopLines(Jasmin, "color2 margin", 80);
       break;
 
     case "camila botelho":
-      loopLines(Camila, "color2 margin",80);
+      loopLines(Camila, "color2 margin", 80);
       break;
 
     case "botelho log0001":
-      loopLines(Log01, "color2 margin",80)
+      loopLines(Log01, "color2 margin", 80);
       break;
-    
+
     case "botelho log0002":
-      loopLines(Log02, "color2 margin",80)
+      loopLines(Log02, "color2 margin", 80);
       break;
 
     case "botelho log0003":
-      loopLines(Log03, "color2 margin",80)
+      loopLines(Log03, "color2 margin", 80);
       break;
 
     default:

@@ -1,9 +1,3 @@
-whoami = [
-  "<br>",
-  "The paradox of “Who am I?” is: we never know, but, we constantly find out.",
-  "<br>"
-];
-
 Jasmin= [
     "<br>",
     "Agente:Jasmin",
@@ -17,7 +11,6 @@ Jasmin= [
     "Digite o sobrenome do usuário ou agente seguido do log para mais informações:",
     "Exemplo Agente Souza => Souza Log 0001",
     "<br>"
-
 ]
 
 Camila = [
@@ -59,7 +52,6 @@ Log02=[
 Log03=[
     "<br>",
   "11/11/1974",
-
   "Camila passou sem nenhuma sequela pelo processo de extração, ela não apresenta nenhum resquício de sua antiga",
   "vida, Camila continuará sob observação durante 1 ano, durante esse período, é importante que ela não tenha",
   "contato com nenhuma pessoa de seu laço de vida antigo, tal contato pode resultar na volta de suas antigas ",
@@ -67,10 +59,32 @@ Log03=[
     "</br>"
 ]
 
-
+// ── SEQUÊNCIA DE BOOT ──────────────────────────────────────────────────
+bootSequence = [
+"Initializing DEMP Kernel v.3.7-classified... OK",
+"Loading Security Abstraction Layer... OK",
+"Verifying Agent Database... 1.847 records",
+"Verifying Ex-Citizen Database... 342 records",
+"────────────────────────────────────────────────────",
+"Establishing connection to DEMP/BRS-01...",
+  "Resolving host: 192.168.15.7 ... OK",
+  "Opening socket on port 4433 (TLS) ... OK",
+  "Awaiting server response ... OK",
+  "Certificate fingerprint: 9F:3A:C1:04:BE:72:DA:9E:11:08:CC:47:F3",
+  "Tunnel established — Latency: 14ms — Uplink: 512 kbps",
+"Connection to DEMP/BRS-01... ESTABLISHED",
+"────────────────────────────────────────────────────",
+"Authenticating Administrator credentials...",
+  "Sending token [RSA-4096] ... OK",
+  "Access level verified: ADMINISTRADOR",
+"Authentication... GRANTED",
+"────────────────────────────────────────────────────",
+"Synchronizing internal clock... 00:00:01 — 1974",
+"System integrity check... PASSED",
+"DEMP Terminal ready.",
+];
 
 banner = [
-//  '<span class="index">Bem vindo Administrador.</span>',
 "██████╗ ███████╗███╗   ███╗██████╗ ",
 "██╔══██╗██╔════╝████╗ ████║██╔══██╗",
 "██║  ██║█████╗  ██╔████╔██║██████╔╝",

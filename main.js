@@ -135,6 +135,10 @@ function commander(cmd) {
       loopLines(Log03, "color2 margin", 80);
       break;
 
+    case "botelho log0004":
+      loopLines(Log04, "color2 margin", 80);
+      break;
+
     default:
       addLine(
         "<span class=\"color2\">Command not found. For a list of commands, type 'help'.</span>",
